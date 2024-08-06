@@ -27,12 +27,34 @@ variations = np.linspace(-1.0, 1.0, 10)
 The "delta_t" variable defines how frequently the motion of the bodies' positions/velocities are updated in time, while "steps" defines the total number of these steps taken over the course of the simulation. The purpose of "variations" is to generate an array of 10, even spaced values which can be added to the initial positions of the bodies, to produce 10 unique trajectory simulation. Note that the variations values range from -0.1 to 0.1, ensuring only small changes are made to the initial system of bodies, while the first two variables can be defined according to user preference, though increasing steps will result in longer computation time.
 
 
-The code will then produce 10 unique simulations according to the initial variables: 
+The code will produce 10 unique simulations according to the initial variables: 
 
 ```python
 for variation in variations:
     p_1, p_2, p_3 = run_simulation_with_variation(variation, steps, delta_t)
     all_simulations.append((p_1, p_2, p_3, variation))
+```
+
+At this point, the user will be prompted to decide whether they want visualise any of the simulation trajectories (yes/no), followed by how many of the simulations they wish to visualise if they entered 'yes'. This option allows the user to control the computation time allocated to animating trajectories, as this step not necessary to the statistical analysis of the trajectories.
+
+
+```python
+while True:
+    visualize = input("Do you want to visualize the trajectories for the variations? (yes/no): ").strip().lower()
+    if visualize in ['yes', 'no']:
+        break
+    print("Invalid input. Please enter 'yes' or 'no'.")
+
+if visualize == 'yes':
+    while True:
+        try:
+            num_variations = int(input("How many variations do you want to animate? (1-10): ").strip())
+            if 1 <= num_variations <= 10:
+                break
+            else:
+                print("Invalid number. Please enter a number between 1 and 10.")
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
 ```
 
 
