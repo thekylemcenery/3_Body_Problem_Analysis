@@ -56,6 +56,11 @@ if visualize == 'yes':
         except ValueError:
             print("Invalid input. Please enter a valid integer.")
 ```
+Note that the animation settings can also be adjusted, however, the presets in the code should produce sufficiently smooth visualisation of the bodies' motion.
+```python
+        frames_per_sec = 60
+        frame_interval = 1000 / frames_per_sec
+```
 
 
 
