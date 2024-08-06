@@ -62,6 +62,10 @@ Note that the animation settings can also be adjusted prior to running the code,
         frame_interval = 1000 / frames_per_sec
 ```
 
+The resulting animation(s) will appear as mp4 files in the same directory as the program. Three example animations produced by the program are provided in the main branch of the repository.
+
+
+
 
 
 
