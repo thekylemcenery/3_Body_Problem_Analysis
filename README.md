@@ -35,7 +35,7 @@ for variation in variations:
     all_simulations.append((p_1, p_2, p_3, variation))
 ```
 
-At this point, the user will be prompted to decide whether they want visualise any of the simulation trajectories (yes/no), followed by how many of the simulations they wish to visualise if they entered 'yes'. This option allows the user to control the computation time allocated to animating trajectories, as this step not necessary to the statistical analysis of the trajectories.
+At this point, the user will be prompted to decide whether they want visualise any of the simulation trajectories (yes/no), followed by how many of the simulations they wish to visualise if they entered 'yes'. This option allows the user to control the computation time allocated to animating trajectories, as this step not necessary to the statistical analysis of the trajectories. Any invalid inputs will result in continual prompts until a valid entry is made by the user .
 
 
 ```python
