@@ -10,3 +10,10 @@ This program runs multiple simulations of the three-body problem with varying in
 4. Examples
 5. Contributing
 6. License
+
+## Installation 
+Use the package manager pip to install the matplotlib,numPy and Panas libraries:
+```bash
+pip install matplotlib pandas numpy
+```
+## Usage
