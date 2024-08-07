@@ -117,3 +117,35 @@ These are some examples of plots produced, demonstrating the variety of trajecto
 ![Figure 2024-08-06 160628 (2)](https://github.com/user-attachments/assets/34480bc5-8558-42f5-b594-ea1ec200e1d8)
 ![Figure 2024-08-06 160628 (3)](https://github.com/user-attachments/assets/e90d2143-73d4-4323-bcc9-38d9c08c2516)
 
+The dictionaries for each body are then concatenated into data frames and grouped by time, allowing for the calculation of the average position of each body at a given time across all 10 variations. 
+
+```python
+# Concatenate all data frames for each body to calculate the mean path
+body_A_data = pd.concat(body_A_data_frames.values())
+body_B_data = pd.concat(body_B_data_frames.values())
+body_C_data = pd.concat(body_C_data_frames.values())
+
+# Group each data set by time and calculate the mean
+body_A_grp = body_A_data.groupby('Time')
+body_B_grp = body_B_data.groupby('Time')
+body_C_grp = body_C_data.groupby('Time')
+```
+Plotting the average position over time visualises the mean path taken by each body, take body A for example:
+
+```python
+mean_path_A = body_A_grp[['X', 'Y', 'Z']].mean()
+# Plot the mean path for Body A
+fig_A = plt.figure()
+ax_A = fig_A.add_subplot(111, projection='3d')
+ax_A.plot(mean_path_A['X'], mean_path_A['Y'], mean_path_A['Z'], color='darkorange')
+ax_A.set_xlabel('X')
+ax_A.set_ylabel('Y')
+ax_A.set_zlabel('Z')
+ax_A.set_title('Mean Path for Body A')
+style_3d_plot(ax_A)  # Apply the styling
+plt.show()
+```
+
+![Figure 2024-08-06 160628 (4)](https://github.com/user-attachments/assets/d8a141bc-2df6-46f9-aebf-66a5971be5b3)
+
+
