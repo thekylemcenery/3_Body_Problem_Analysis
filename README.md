@@ -190,3 +190,34 @@ plt.show()
 
 ![Figure 2024-08-06 160628 (10)](https://github.com/user-attachments/assets/94405fe2-a85b-4417-b6c1-ac222da37ef5)
 
+The program will then determine the mean and standard deviations for the trajectories each body, storing this within a new data frame and outputing these values for the user.
+
+```python
+# Mean and standard deviation of deviations for Body A
+mean_deviation_A = pd.DataFrame({key: df['deviation'].mean() for key, df in deviation_data_frames_A.items()}, index=['Mean']).T
+std_deviation_A = pd.DataFrame({key: df['deviation'].std() for key, df in deviation_data_frames_A.items()}, index=['Std']).T
+
+print("Mean Deviation for Body A:")
+print(mean_deviation_A)
+print("\nStandard Deviation of Deviation for Body A:")
+print(std_deviation_A)
+```
+
+The final form of data analysis performed by the code is the calcultion of the cumulative summation of the deviation from the mean path for each body across all simulations. Where the resulting plot shows a predictable trend of increasing cumulative deviation with respect to time.
+
+```python
+# Cumulative sum of deviations for Body A
+cumsum_deviation_A = pd.DataFrame({key: df['deviation'].cumsum() for key, df in deviation_data_frames_A.items()})
+
+plt.figure(figsize=(10, 6))
+for key in cumsum_deviation_A.columns:
+    plt.plot(cumsum_deviation_A.index, cumsum_deviation_A[key], label=key)
+
+plt.xlabel('Time')
+plt.ylabel('Cumulative Sum of Deviation')
+plt.title('Cumulative Sum of Deviation Over Time for Body A')
+plt.grid(True)
+plt.legend()
+plt.show()
+```
+![Figure 2024-08-06 160628 (13)](https://github.com/user-attachments/assets/c162b0fc-6332-4a58-aefb-cf64bddf4297)
