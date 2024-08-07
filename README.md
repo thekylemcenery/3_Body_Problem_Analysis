@@ -26,8 +26,7 @@ variations = np.linspace(-1.0, 1.0, 10)
 ```
 The "delta_t" variable defines how frequently the motion of the bodies' positions/velocities are updated in time, while "steps" defines the total number of these steps taken over the course of the simulation. The purpose of "variations" is to generate an array of 10, even spaced values which can be added to the initial positions of the bodies, to produce 10 unique trajectory simulation. Note that the variations values range from -0.1 to 0.1, ensuring only small changes are made to the initial system of bodies, while the first two variables can be defined according to user preference, though increasing steps will result in longer computation time.
 
-
-The code will produce 10 unique simulations according to the initial variables: 
+The code will produce 10 variations of a 3-body simulation, storing the positions of the bodies at each time step in 3 NumPy arrays ('p_1', 'p_2', 'p_3') and appending these arrays into a list ('all_simulations'):
 
 ```python
 for variation in variations:
@@ -62,8 +61,9 @@ Note that the animation settings can also be adjusted prior to running the code,
         frame_interval = 1000 / frames_per_sec
 ```
 
-The resulting animation(s) will appear as mp4 files in the same directory as the program. Three example animations produced by the program are provided in the main branch of the repository.
+The resulting animation(s) will appear as mp4 files in the same directory as the python file. Three example animations produced by the program are provided in the main branch of the repository.
 
+Upon completion of the animation step, 
 
 
 
