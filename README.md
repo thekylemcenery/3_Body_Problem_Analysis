@@ -134,6 +134,7 @@ Plotting the average position over time visualises the mean path taken by each b
 
 ```python
 mean_path_A = body_A_grp[['X', 'Y', 'Z']].mean()
+
 # Plot the mean path for Body A
 fig_A = plt.figure()
 ax_A = fig_A.add_subplot(111, projection='3d')
@@ -148,4 +149,26 @@ plt.show()
 
 ![Figure 2024-08-06 160628 (4)](https://github.com/user-attachments/assets/d8a141bc-2df6-46f9-aebf-66a5971be5b3)
 
+The deviation from the mean path over time for all 10 trajectories of a given body are calculated and plotted. Demonstrating how the trajectories diverge over the course of each simulation.
+
+```python
+# Calculate deviation for each variation for Body A
+deviation_data_frames_A = {}
+for key, df in body_A_data_frames.items():
+    deviation_df = calculate_deviation(df, mean_path_A)
+    deviation_data_frames_A[key] = deviation_df
+
+# Plot the deviation over time for each variation for Body A
+plt.figure(figsize=(10, 6))
+for key, df in deviation_data_frames_A.items():
+    plt.plot(df['Time'], df['deviation'], label=key)
+
+plt.xlabel('Time')
+plt.ylabel('Deviation from Mean Path')
+plt.title('Deviation from Mean Path Over Time for Body A')
+plt.legend(loc='upper right')
+plt.grid(True)
+plt.show()
+```
+![Figure 2024-08-06 160628 (7)](https://github.com/user-attachments/assets/f663281a-0d13-4e69-9847-421bc93e49f6)
 
