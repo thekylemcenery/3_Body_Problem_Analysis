@@ -112,6 +112,7 @@ for body_data_frames, body_name in zip([body_A_data_frames, body_B_data_frames, 
 ```
 
 These are some examples of plots produced, demonstrating the variety of trajectories of each body, even with relatively small alterations to the system's initial conditions:
+
 ![Figure 2024-08-06 160628 (1)](https://github.com/user-attachments/assets/7f926cd2-9eee-457e-a041-e863939eb779)
 ![Figure 2024-08-06 160628 (2)](https://github.com/user-attachments/assets/34480bc5-8558-42f5-b594-ea1ec200e1d8)
 ![Figure 2024-08-06 160628 (3)](https://github.com/user-attachments/assets/e90d2143-73d4-4323-bcc9-38d9c08c2516)
