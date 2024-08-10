@@ -215,7 +215,7 @@ plt.show()
 
 The code then determines the variance of the position data for each body at a given time step. The resulting graphs demonstrate the increasing unpredictability in the behaviour of the 3-body system over time, as all 3 show a clear trend of increasing variance with respect to time.
 
-# Calculate variance over time for Body A
+Calculate variance over time for Body A
 variance_A = body_A_data.groupby('Time')[['X', 'Y', 'Z']].var().mean(axis=1)
 
 ```python
