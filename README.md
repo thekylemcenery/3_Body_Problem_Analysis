@@ -64,7 +64,8 @@ Note that the animation settings can also be adjusted prior to running the code,
 The resulting animation(s) will appear as mp4 files in the same directory as the python file. Three example animations produced by the program are provided in the main branch of the repository.
 
 Note that the masses, initial positions and velocities of the 3 bodies can also be adjusted, though not by the user once the code is executed. This is because the these values only exist in the 'run_simulation_with_variation' function within the 'functions.py' file:
-```
+
+```python
 def run_simulation_with_variation(variation, steps, delta_t):
     v = 3 + variation
     L = 1
@@ -113,7 +114,7 @@ for idx, (p_1, p_2, p_3, variation) in enumerate(all_simulations):
 ## Functions
 
 The first two functions calculate the position and velocity of a body at a given instant in time using basic kinematics. These are later called in the animation step to continually update these values for all 3 bodies over the course of a single simulation.
-```
+```python
 def update_position(body, dt):
     '''
     Update the position of a body based on its velocity and time step.
