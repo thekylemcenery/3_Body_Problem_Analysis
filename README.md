@@ -67,6 +67,17 @@ Note that the masses, initial positions and velocities of the 3 bodies can also 
 
 ```python
 def run_simulation_with_variation(variation, steps, delta_t):
+    '''
+    Run a simulation with a specific variation in the initial conditions.
+
+    Parameters:
+    - variation: A scalar value to vary the initial conditions of the bodies.
+    - steps: The number of steps to simulate.
+    - delta_t: The time step for the simulation.
+
+    Returns:
+    - p_1, p_2, p_3: Numpy arrays containing the position data for the first, second, and third bodies at each time step.
+    '''
     v = 3 + variation
     L = 1
     body_A = Body(1 + variation * 0.5, 1, 2, 0.1, 'darkorange', 10, 0, 0, 0)
@@ -95,7 +106,7 @@ class Body:
         self.vz = vz
         self.r = np.array([x, y, z])
 ```
-Adjusting the initial masses, positions and velocities should yield significantly different trajectories across all simulations. It should be noted however, that the simulation utilises Newtonian mechanics, wherein the gravitational force experinced by a body is inversely proportional to the square of its distances to the other bodies' centres, and proportional to the product of its mass and a neighbouring body. Therefore, the bodies must be sufficiently similar in distance and of similar mass to produce the desired chaotic behaviour of a 3 body system. 
+Adjusting the initial masses, positions and velocities will cause the code to yield a significantly different collection of trajectories. It should be noted however, that the simulation utilises Newtonian mechanics, wherein the gravitational force experinced by a body is inversely proportional to the square of its distances to the other bodies' centres, and proportional to the product of its mass and a neighbouring body. Therefore, the bodies must be sufficiently similar in distance and of similar mass to produce the desired chaotic behaviour of a 3 body system. 
 
 Upon completion of the animation step, the data within the 'all_simulations' list is reorganised into Pandas structures, with each simulation's data being stored in a data frame, then all 10 data frames themselves are stored in a dictionary ('data_frames'). Pandas provides more intuitive methods for grouping and aggregating the data, the Examples section explores how this proves useful for comparing the 10 simulations.
 
@@ -176,10 +187,64 @@ def gravitational_force(body1, body2):
     force = np.array([force_x, force_y, force_z])
     return force
 ```
+The following function utilses the previous three to simulate the motion of the 3 bodies for a single time step. This is done by updating the veclocity/positional properties of each body's associated class variable: 
 
+```python
+def simulate(bodies, dt):
+    '''
+    Simulate the movement of a list of celestial bodies over a single time step.
 
+    Parameters:
+    - bodies: A list of objects representing the celestial bodies in the simulation.
+    - dt: The time step for the simulation.
 
+    Returns:
+    - None (The function updates the position and velocity of each body in place).
+    '''
+    for body in bodies:
+        net_force = [0, 0, 0]
+        for other_body in bodies:
+            if body != other_body:
+                force = gravitational_force(body, other_body)
+                net_force[0] += force[0]
+                net_force[1] += force[1]
+                net_force[2] += force[2]
+        update_velocity(body, net_force, dt)
+    for body in bodies:
+        update_position(body, dt)
+        body.r = np.array([body.x, body.y, body.z])
+```
+By executing the 'simulate' function and then recording the positional property of each body variable, a set of data is produced which can be used visualise the system at that time step. By continually calling the 'simulate' function for many time steps, we thus produce a collection of frames which can be compiled into an animation. For this purpose, we define the 'frames' function: 
 
+```python
+def frames(bodies, dt, steps):
+    '''
+    Generate position data for multiple steps in the simulation.
+
+    Parameters:
+    - bodies: A list of objects representing the celestial bodies in the simulation.
+    - dt: The time step for the simulation.
+    - steps: The number of steps to simulate.
+
+    Returns:
+    - p_1, p_2, p_3: Numpy arrays containing the position data for the first, second, and third bodies at each time step.
+    '''
+    p_1 = np.zeros((steps, 3))
+    p_2 = np.zeros((steps, 3))
+    p_3 = np.zeros((steps, 3))
+    body1 = bodies[0]
+    body2 = bodies[1]
+    body3 = bodies[2]
+    p_1[0] = body1.r
+    p_2[0] = body2.r
+    p_3[0] = body3.r
+    for i in range(1, steps):
+        simulate(bodies, dt)
+        p_1[i] = bodies[0].r
+        p_2[i] = bodies[1].r
+        p_3[i] = bodies[2].r
+    return p_1, p_2, p_3
+```
 
 ## Examples
 The program filters the trajectory data into 3 separate dictionaries for each of the 3 bodies, allowing us to visualise the differing trajectories of an individual body for all 10 variations: 
