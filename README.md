@@ -76,7 +76,15 @@ for idx, (p_1, p_2, p_3, variation) in enumerate(all_simulations):
     df = pd.DataFrame(data, columns=['Body', 'Time', 'X', 'Y', 'Z', 'Variation'])
     data_frames[f'variation_{idx}'] = df
 ```
-The program filters the trajectory data into 3 separate dictionaries for each of the 3 bodies, allowing us to visualise the differing trajectories of an indiviual body for all 10 variations: 
+
+
+
+
+## Functions
+
+
+## Examples
+The program filters the trajectory data into 3 separate dictionaries for each of the 3 bodies, allowing us to visualise the differing trajectories of an individual body for all 10 variations: 
 ``` python
 # Separate the position data for each body into different dictionariesbody_A_data_frames = {}
 body_B_data_frames = {}
@@ -221,15 +229,6 @@ plt.legend()
 plt.show()
 ```
 ![Figure 2024-08-06 160628 (13)](https://github.com/user-attachments/assets/c162b0fc-6332-4a58-aefb-cf64bddf4297)
-
-
-
-
-## Functions
-
-
-## Examples
-
 ## Contributing 
 
 ## License
