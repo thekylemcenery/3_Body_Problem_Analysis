@@ -60,9 +60,42 @@ Note that the animation settings can also be adjusted prior to running the code,
         frame_interval = 1000 / frames_per_sec
 ```
 
+The initial positions and velocities of the 3 bodies can also be adjusted, though not by the user once the code is executed. This is because the these values only exist in the 'run_simulation_with_variation' function within the 'functions.py' file:
+```
+def run_simulation_with_variation(variation, steps, delta_t):
+    v = 3 + variation
+    L = 1
+    body_A = Body(1 + variation * 0.5, 1, 2, 0.1, 'darkorange', 10, 0, 0, 0)
+    body_B = Body(L * 2, 1 + variation * 0.5, 3, 0.1, 'green', 3, -v / 2, v * math.sqrt(3) / 2, 0)
+    body_C = Body(0, 0, 2 + variation * 0.5, 0.1, 'blue', 3, v, -v * math.sqrt(3) / 2, 0)
+
+    bodies = [body_A, body_B, body_C]
+
+    p_1, p_2, p_3 = frames(bodies, delta_t, steps)
+
+    return p_1, p_2, p_3
+```
+The reasoning for this approach was the decision to define the bodies as their own class. As each body has many other attributes such as mass, radius and colour, it is convenient to have all these attributes included in a single data type, which makes the simulation more versatile and open for further adaptation.
+
+```python
+class Body:
+    def __init__(self, x, y, z, radius, color, mass, vx=0, vy=0, vz=0):
+        self.x = x
+        self.y = y
+        self.z = z
+        self.radius = radius
+        self.color = color
+        self.mass = mass
+        self.vx = vx
+        self.vy = vy
+        self.vz = vz
+        self.r = np.array([x, y, z])
+```
+
+
 The resulting animation(s) will appear as mp4 files in the same directory as the python file. Three example animations produced by the program are provided in the main branch of the repository.
 
-Upon completion of the animation step, the data within the 'all_simulations' list is reorganised into Pandas structures, with each simulation's data being stored in a data frame, then all 10 data frames themselves are stored in a dictionary ('data_frames'). Pandas provides more intuitive methods for grouping and aggregating the data, which will prove useful for comparing the 10 simulations.
+Upon completion of the animation step, the data within the 'all_simulations' list is reorganised into Pandas structures, with each simulation's data being stored in a data frame, then all 10 data frames themselves are stored in a dictionary ('data_frames'). Pandas provides more intuitive methods for grouping and aggregating the data, the Examples section explores how this proves useful for comparing the 10 simulations.
 
 ```python
 data_frames = {}
