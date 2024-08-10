@@ -203,7 +203,7 @@ print("\nStandard Deviation of Deviation for Body A:")
 print(std_deviation_A)
 ```
 
-The final form of data analysis performed by the code is the calcultion of the cumulative summation of the deviation from the mean path for each body across all simulations. Where the resulting plot shows a predictable trend of increasing cumulative deviation with respect to time.
+The final example of data analysis performed by the code is the calcultion of the cumulative summation of the deviation from the mean path for each body across all simulations. Where the resulting plot shows a predictable trend of increasing cumulative deviation with respect to time.
 
 ```python
 # Cumulative sum of deviations for Body A
@@ -221,3 +221,15 @@ plt.legend()
 plt.show()
 ```
 ![Figure 2024-08-06 160628 (13)](https://github.com/user-attachments/assets/c162b0fc-6332-4a58-aefb-cf64bddf4297)
+
+
+
+
+## Functions
+
+
+## Examples
+
+## Contributing 
+
+## License
