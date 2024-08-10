@@ -95,7 +95,7 @@ class Body:
         self.vz = vz
         self.r = np.array([x, y, z])
 ```
-Adjusting the initial masses,positions andvelocities should yield significantly different trajectories in all simulations. It should be noted however, that the simulation utilises Newtonian mechanics, wherein the gravitational force experinced by a body is inversely proportional to the square of its distances to the other bodies' centres, and proportional to the product of its mass and a neighbouring body. Therefore, the bodies must be sufficiently similar in distance and of similar mass to produce the desired chaotic behaviour of a 3 body system. 
+Adjusting the initial masses, positions and velocities should yield significantly different trajectories across all simulations. It should be noted however, that the simulation utilises Newtonian mechanics, wherein the gravitational force experinced by a body is inversely proportional to the square of its distances to the other bodies' centres, and proportional to the product of its mass and a neighbouring body. Therefore, the bodies must be sufficiently similar in distance and of similar mass to produce the desired chaotic behaviour of a 3 body system. 
 
 Upon completion of the animation step, the data within the 'all_simulations' list is reorganised into Pandas structures, with each simulation's data being stored in a data frame, then all 10 data frames themselves are stored in a dictionary ('data_frames'). Pandas provides more intuitive methods for grouping and aggregating the data, the Examples section explores how this proves useful for comparing the 10 simulations.
 
