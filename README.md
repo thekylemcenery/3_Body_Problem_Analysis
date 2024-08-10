@@ -9,7 +9,7 @@ This program runs multiple simulations of the three-body problem with varying in
 3. Functions
 4. Examples
 5. Contributing
-6. License
+
 
 ## Installation 
 Use the package manager pip to install the matplotlib,numPy and Panas libraries:
@@ -435,25 +435,3 @@ plt.show()
 One major area in which the program could be improved would be defining the intiial positions, velocities and masses of the bodies outside of the main python scripts. This could be done by having this data in an external textfile which is then read by one of the scipts, which would make it easier to adjust these values without the concern of typos or indentation errors interfering with the code. It could also open up the possibility of generalising the code to all N-body systems, where the user can determine the number of bodies within the system.
 
 
-## License
-MIT License
-
-Copyright (c) 2024 Kyle Mcenery
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
