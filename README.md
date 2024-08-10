@@ -60,7 +60,10 @@ Note that the animation settings can also be adjusted prior to running the code,
         frame_interval = 1000 / frames_per_sec
 ```
 
-The initial positions and velocities of the 3 bodies can also be adjusted, though not by the user once the code is executed. This is because the these values only exist in the 'run_simulation_with_variation' function within the 'functions.py' file:
+
+The resulting animation(s) will appear as mp4 files in the same directory as the python file. Three example animations produced by the program are provided in the main branch of the repository.
+
+Note that the masses, initial positions and velocities of the 3 bodies can also be adjusted, though not by the user once the code is executed. This is because the these values only exist in the 'run_simulation_with_variation' function within the 'functions.py' file:
 ```
 def run_simulation_with_variation(variation, steps, delta_t):
     v = 3 + variation
@@ -75,7 +78,7 @@ def run_simulation_with_variation(variation, steps, delta_t):
 
     return p_1, p_2, p_3
 ```
-The reasoning for this approach was the decision to define the bodies as their own class. As each body has many other attributes such as mass, radius and colour, it is convenient to have all these attributes included in a single data type, which makes the simulation more versatile and open for further adaptation.
+The reasoning for this approach was the decision to define the bodies as their own class. As each body has many other attributes such as radius and colour, it is convenient to have all these attributes included in a single data type, which makes the simulation more versatile and open for further adaptation.
 
 ```python
 class Body:
@@ -91,9 +94,7 @@ class Body:
         self.vz = vz
         self.r = np.array([x, y, z])
 ```
-
-
-The resulting animation(s) will appear as mp4 files in the same directory as the python file. Three example animations produced by the program are provided in the main branch of the repository.
+Adjusting the initial masses,positions andvelocities should yield significantly different trajectories in all simulations. It should be noted however, that the simulation utilises Newtonian mechanics, wherein the gravitational force experinced by a body is inversely proportional to the square of its distances to the other bodies' centres, and proportional to the product of its mass and a neighbouring body. Therefore, the bodies must be sufficiently similar in distance and of similar mass to produce the desired chaotic behaviour of a 3 body system. 
 
 Upon completion of the animation step, the data within the 'all_simulations' list is reorganised into Pandas structures, with each simulation's data being stored in a data frame, then all 10 data frames themselves are stored in a dictionary ('data_frames'). Pandas provides more intuitive methods for grouping and aggregating the data, the Examples section explores how this proves useful for comparing the 10 simulations.
 
@@ -109,11 +110,74 @@ for idx, (p_1, p_2, p_3, variation) in enumerate(all_simulations):
     df = pd.DataFrame(data, columns=['Body', 'Time', 'X', 'Y', 'Z', 'Variation'])
     data_frames[f'variation_{idx}'] = df
 ```
-
-
-
-
 ## Functions
+
+The first two functions calculate the position and velocity of a body at a given instant in time using basic kinematics. These are later called in the animation step to continually update these values for all 3 bodies over the course of a single simulation.
+```
+def update_position(body, dt):
+    '''
+    Update the position of a body based on its velocity and time step.
+
+    Parameters:
+    - body: The object representing the celestial body, which has attributes for position (x, y, z) and velocity (vx, vy, vz).
+    - dt: The time step for the simulation.
+
+    Returns:
+    - None (The function updates the position of the body in place).
+    '''
+    body.x += body.vx * dt
+    body.y += body.vy * dt
+    body.z += body.vz * dt
+
+def update_velocity(body, force, dt):
+    '''
+    Update the velocity of a body based on the applied force and time step.
+
+    Parameters:
+    - body: The object representing the celestial body, which has attributes for mass and velocity (vx, vy, vz).
+    - force: A list or array representing the force applied to the body in the x, y, and z directions.
+    - dt: The time step for the simulation.
+
+    Returns:
+    - None (The function updates the velocity of the body in place).
+    '''
+    ax = force[0] / body.mass
+    ay = force[1] / body.mass
+    az = force[2] / body.mass
+    body.vx += ax * dt
+    body.vy += ay * dt
+    body.vz += az * dt
+```
+Additionally, we require a kinetics function known as 'gravitational_force'. This uses Newton's law of universal gravitation to calculate the attractive force between two of the bodies based on the distance between their centres at a given instant in time:
+
+```python
+def gravitational_force(body1, body2):
+    '''
+    Calculate the gravitational force exerted on body1 by body2.
+
+    Parameters:
+    - body1: The object representing the first celestial body.
+    - body2: The object representing the second celestial body.
+
+    Returns:
+    - force: A numpy array representing the force exerted on body1 by body2 in the x, y, and z directions.
+    '''
+    G = 1.0  # Gravitational constant (set to 1.0 for simplicity)
+    dx = body2.x - body1.x
+    dy = body2.y - body1.y
+    dz = body2.z - body1.z
+    distance_squared = dx**2 + dy**2 + dz**2
+    distance = math.sqrt(distance_squared)
+    force_magnitude = G * body1.mass * body2.mass / distance_squared
+    force_x = force_magnitude * dx / distance
+    force_y = force_magnitude * dy / distance
+    force_z = force_magnitude * dz / distance
+    force = np.array([force_x, force_y, force_z])
+    return force
+```
+
+
+
 
 
 ## Examples
