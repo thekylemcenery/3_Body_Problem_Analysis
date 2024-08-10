@@ -245,6 +245,44 @@ def frames(bodies, dt, steps):
         p_3[i] = bodies[2].r
     return p_1, p_2, p_3
 ```
+The next function exists only to maintain a consistent visual style for each frame of animation, avoiding the redundancy of repeating this code within the loops which produce the animation.
+
+```python
+def style_3d_plot(ax):
+    '''
+    Apply custom styling to a 3D plot.
+
+    Parameters:
+    - ax: The matplotlib Axes object representing the 3D plot.
+
+    Returns:
+    - None (The function applies styling directly to the provided Axes object).
+    '''
+    ax.set_facecolor('black')  # Set background color to black
+    ax.grid(color='grey', linestyle='--')  # Set grid color and style
+    ax.xaxis.set_pane_color((0, 0, 0, 0))  # Set x-axis pane color to black (transparent)
+    ax.yaxis.set_pane_color((0, 0, 0, 0))  # Set y-axis pane color to black (transparent)
+    ax.zaxis.set_pane_color((0, 0, 0, 0))  # Set z-axis pane color to black (transparent)
+```
+The final remaining function simply takes the data frame for a single trajectory of a given body and calculates its deviation from the mean path of all 10 trajectores simulated. This is further outlined in the Examples section.
+
+```python
+def calculate_deviation(df, mean_path):
+    '''
+    Calculate the deviation of each position from the mean path.
+
+    Parameters:
+    - df: A pandas DataFrame containing the position data for a body, with columns 'X', 'Y', 'Z', and 'Time'.
+    - mean_path: A pandas DataFrame containing the mean positions for the body at each time step.
+
+    Returns:
+    - df: A pandas DataFrame with an additional column 'deviation', representing the deviation from the mean path at each time step.
+    '''
+    df = df.copy()
+    df = df.merge(mean_path, on='Time', suffixes=('', '_mean'))
+    df['deviation'] = np.sqrt((df['X'] - df['X_mean'])**2 + (df['Y'] - df['Y_mean'])**2 + (df['Z'] - df['Z_mean'])**2)
+    return df
+```
 
 ## Examples
 The program filters the trajectory data into 3 separate dictionaries for each of the 3 bodies, allowing us to visualise the differing trajectories of an individual body for all 10 variations: 
